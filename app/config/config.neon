@@ -18,3 +18,5 @@ session:
 services:
 	router: App\RouterFactory::createRouter
 	- App\Model\ProjectModel
+	- Translator
+	- App\Base\FormFactory

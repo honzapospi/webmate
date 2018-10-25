@@ -2,7 +2,6 @@
 
 namespace App\Presenters;
 
-use App\Model\ProjectModel;
 use Nette;
 
 
@@ -20,10 +19,6 @@ final class LoginPresenter extends BasePresenter {
 	public function formSubmitted(Nette\Application\UI\Form $form){
 		dumpe($form->getValues());
 	}
-
-
-
-
 
 
 }
