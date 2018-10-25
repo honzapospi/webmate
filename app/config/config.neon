@@ -1,0 +1,20 @@
+parameters:
+
+database:
+	dsn: 'mysql:host=127.0.0.1;dbname=web_checker'
+	user: web_checker
+	password: heslo
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: App\*Module\Presenters\*Presenter
+
+
+session:
+	expiration: 14 days
+
+
+services:
+	router: App\RouterFactory::createRouter
+	- App\Model\ProjectModel
