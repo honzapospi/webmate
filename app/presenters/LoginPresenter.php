@@ -14,13 +14,31 @@ final class LoginPresenter extends BasePresenter {
 		$this->loginFormController = $loginFormController;
 	}
 
+	protected function startup() {
+		parent::startup();
+		if($this->user->isLoggedIn()){
+			$this->redirect('ProjectList:default');
+		}
+	}
+
+	public function actionDefault(){
+		$this->getComponent('loginForm');
+		foreach($this->getComponents() as $name => $c){
+			dumpe($name);
+		}
+		//$c = $this['loginForm'];
+		//dumpe($c);
+	}
+
 	protected function createComponentLoginForm(){
-		return $this->loginFormController->create();
+		$form = $this->loginFormController->create();
+		$form->onSuccess[] = function (){
+			$this->flashMessage('Login successful.');
+			$this->redirect('ProjectList:default');
+		};
+		return $form;
 	}
 
-	public function formSubmitted(Nette\Application\UI\Form $form){
-
-	}
 
 
 }

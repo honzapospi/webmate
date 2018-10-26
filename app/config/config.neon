@@ -22,3 +22,4 @@ services:
 	- App\Base\FormFactory
 	- App\Model\UserModel
 	- App\UserModule\LoginFormController
+	- App\Authenticator

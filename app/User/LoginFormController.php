@@ -6,7 +6,6 @@
 
 namespace App\UserModule;
 use App\Base\IFormFactory;
-use App\Model\UserModel;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 use Nette\Security\User;
@@ -21,7 +20,6 @@ class LoginFormController {
 	use SmartObject;
 
 	private $formFactory;
-	private $userModel;
 	private $user;
 
 	public function __construct(IFormFactory $formFactory, User $user){
@@ -29,7 +27,7 @@ class LoginFormController {
 		$this->user = $user;
 	}
 
-	public function create(): Form{
+	public function create(): Form {
 		$form = $this->formFactory->create();
 		$form->addText('username', 'Username')->setRequired();
 		$form->addPassword('password', 'Password')->setRequired();
