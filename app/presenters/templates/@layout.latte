@@ -3,13 +3,17 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
-
 	<title>{ifset title}{include title|stripHtml} | {/ifset}Nette Web</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
+
     <nav>
         <ul>
             <li><a n:href=":Login:default">Login</a></li>
@@ -23,8 +27,15 @@
 	{include content}
 
 	{block scripts}
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
 	<script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script>
+        $('[data-antirobot]').find(':input').val($('[data-antirobot]').data('antirobot'));
+    </script>
 	{/block}
 </body>
 </html>

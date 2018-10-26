@@ -2,10 +2,19 @@
 
 namespace App\Base;
 
+use Nette\Localization\ITranslator;
+
 class FormFactory implements \App\Base\IFormFactory {
+
+	private $translator;
+
+	public function __construct(ITranslator $translator){
+		$this->translator = $translator;
+	}
 
 	public function create(){
 		$form = new \Nette\Application\UI\Form();
+		$form->setTranslator($this->translator);
 		$renderer = $form->getRenderer();
 		/**
 		 * @var \Nette\Forms\Rendering\DefaultFormRenderer $renderer

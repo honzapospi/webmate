@@ -7,7 +7,8 @@ class Translator implements \Nette\Localization\ITranslator {
 		'Password' => 'Heslo'
 	];
 
-	function translate($message, $count = null)	{
-
+	function translate($message, $count = null): string	{
+		return $this->dict[$message] ??  $message;
 	}
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Presenters;
 
+use App\Base\IFormFactory;
 use Nette;
 use Nette\Application\UI\Form;
 
@@ -9,7 +10,7 @@ final class RegistrationPresenter extends BasePresenter {
 
 	private $formFactory;
 
-	public function __construct(FormFactory $formFactory)	{
+	public function __construct(IFormFactory $formFactory)	{
 		$this->formFactory = $formFactory;
 	}
 
@@ -21,17 +22,23 @@ final class RegistrationPresenter extends BasePresenter {
 		$form->addPassword('password_again', 'Password check')
 			->setRequired()
 			->addRule(Form::EQUAL, 'Password do not match.', $form['password']);
+		$form->addText('rbt', 'Email')->setOption('class', 'hidden')->setOption('rbt', 'cokoliv');
+		$form->addProtection();
 		$form->addSubmit('formsubmit', 'Sign up');
+		//$form->addEmail('email', 'email')->setOption('class', 'hidden');
 		$form->onSuccess[] = [$this, 'formSubmitted'];
 		return $form;
 	}
 
 	public function formSubmitted(Nette\Application\UI\Form $form){
-		if($form->values->username === 'honzaaa'){
-			return $form['username']->addError('Invalid username');
+		//dumpe($form->values);
+
+		if(!$form->values->email){
+			if($form->values->username === 'honzaaa'){
+				return $form['username']->addError('Invalid username');
+			}
+
+			dumpe($form->getValues());
 		}
-
-		dumpe($form->getValues());
 	}
-
 }
