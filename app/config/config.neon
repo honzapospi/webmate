@@ -20,3 +20,5 @@ services:
 	- App\Model\ProjectModel
 	- Translator
 	- App\Base\FormFactory
+	- App\Model\UserModel
+	- App\UserModule\LoginFormController

@@ -2,22 +2,24 @@
 
 namespace App\Presenters;
 
+use App\UserModule\LoginFormController;
 use Nette;
 
 
 final class LoginPresenter extends BasePresenter {
 
+	private $loginFormController;
+
+	public function __construct(LoginFormController $loginFormController)	{
+		$this->loginFormController = $loginFormController;
+	}
 
 	protected function createComponentLoginForm(){
-		$form = new Nette\Application\UI\Form();
-		$form->addText('username', 'Username')->setRequired();
-		$form->addPassword('password', 'Password')->setRequired();
-		$form->addSubmit('formsubmit', 'Login');
-		$form->onSuccess[] = [$this, 'formSubmitted'];
+		return $this->loginFormController->create();
 	}
 
 	public function formSubmitted(Nette\Application\UI\Form $form){
-		dumpe($form->getValues());
+
 	}
 
 

@@ -1,21 +1,44 @@
 <?php
 
+namespace App\Model;
+
+use Nette\Security\AuthenticationException;
+use Nette\Security\Passwords;
+use Nette\Utils\Validators;
+
 class UserModel {
 	use \Nette\SmartObject;
 
 	private $connection;
-	private $password;
 
 	public function __construct(\Nette\Database\Context $context){
 		$this->connection = $context;
-		$this->password = new \Nette\Security\Passwords();
 	}
 
-	public function createRegistration(strinbg $username, string $password): int {
+	public function createRegistration(string $username, string $password, string $email) {
+		if(!Validators::isEmail($email)){
+			throw new ValidationException('Email is not valid.');
+		}
 		$data = [
 			'username' => $username,
-			'password' => $this->password->hash($password)
+			'password' => Passwords::hash($password),
+			'email' => $email
 		];
+		$this->connection->beginTransaction();
+		$accountRow = $this->connection->table('account')->insert([]);
+		$data['account_id'] = $accountRow->id;
+		$this->connection->table('user')->insert($data);
+		$this->connection->commit();
+	}
+
+	public function verify($username, $password){
+		$row = $this->connection->table('user')->where('username', $username)->fetch();
+		if(!$row){
+			new AuthenticationException('Username not found.');
+		} elseif(!Passwords::verify($password, $row->password)){
+			new AuthenticationException('Invalid password.');
+		}
+		return $row;
 	}
 
 
