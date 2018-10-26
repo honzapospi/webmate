@@ -1,19 +1,6 @@
 {block content}
 
-<table>
-    <thead>
-    <tr>
-        <th>Project name</th>
-    </tr>
-    </thead>
-    <tbody>
-    {foreach $projects as $project}
-    <tr>
-        <td>{$project->name}</td>
-    </tr>
-    {/foreach}
-    </tbody>
-</table>
+{control projectList}
 
 {/block}
 

@@ -30,6 +30,12 @@
     <script>
         $('[data-antirobot]').find(':input').val($('[data-antirobot]').data('antirobot'));
     </script>
+    <script src="{$basePath}/ajax.js"></script>
+    <script>
+        $(function () {
+            $.nette.init();
+        });
+    </script>
 	{/block}
 </body>
 </html>

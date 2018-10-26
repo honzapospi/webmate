@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Nette\Database\Context;
+use Nette\Database\Table\ActiveRow;
 use Nette\SmartObject;
 
 class ProjectModel {
@@ -18,5 +19,11 @@ class ProjectModel {
 		return $this->connection->table('project')->where('account_id = ?', $accountId);
 	}
 
+	public function addProject(string $name, int $accountId): ActiveRow {
+		return $this->connection->table('project')->insert([
+			'account_id' => $accountId,
+			'name' => $name
+		]);
+	}
 
 }

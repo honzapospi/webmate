@@ -3,25 +3,39 @@
 namespace App\Presenters;
 
 use App\Model\ProjectModel;
+use App\ProjectModule\IProjectListControlFactory;
 use Nette;
+use Tracy\Debugger;
 
 
 final class ProjectListPresenter extends BasePresenter {
 
 
+	private $projectListControlFactory;
 	private $projectModel;
-	private $projects;
 
-	public function __construct(ProjectModel $projectModel)	{
+	public function __construct(IProjectListControlFactory $projectListControlFactory, ProjectModel $projectModel)	{
+		$this->projectListControlFactory = $projectListControlFactory;
 		$this->projectModel = $projectModel;
 	}
 
-	public function actionDefault(){
-		$this->projects = $this->projectModel->getProjects(3);
+	protected function startup(){
+		parent::startup();
+		if(!$this->user->isLoggedIn()){
+			$this->redirect('Login:default');
+		}
+		Debugger::barDump($this->link('ajax'));
 	}
 
-	public function renderDefault(){
-		$this->template->projects = $this->projects;
+	public function actionAjax(){
+		$data = [];
+		foreach($this->projectModel->getProjects($this->user->identity->data['account_id']) as $project){
+			$data[] = [
+				'id' => $project->id,
+				'name' => $project->name
+			];
+		}
+		$this->sendJson($data);
 	}
 
 	protected function createComponentLoginForm(){
@@ -32,9 +46,9 @@ final class ProjectListPresenter extends BasePresenter {
 		$form->onSuccess[] = [$this, 'formSubmitted'];
 	}
 
-
-
-
+	protected function createComponentProjectList(){
+		return $this->projectListControlFactory->create();
+	}
 
 
 }

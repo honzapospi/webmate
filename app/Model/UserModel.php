@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use Nette\Database\Table\ActiveRow;
 use Nette\Security\AuthenticationException;
 use Nette\Security\Passwords;
 use Nette\Utils\Validators;
@@ -13,6 +14,10 @@ class UserModel {
 
 	public function __construct(\Nette\Database\Context $context){
 		$this->connection = $context;
+	}
+
+	public function getUserByUsername(string $username): ActiveRow {
+		return $this->connection->table('user')->where('username', $username)->fetch();
 	}
 
 	public function createRegistration(string $username, string $password, string $email) {
