@@ -22,12 +22,7 @@ final class LoginPresenter extends BasePresenter {
 	}
 
 	public function actionDefault(){
-		$this->getComponent('loginForm');
-		foreach($this->getComponents() as $name => $c){
-			dumpe($name);
-		}
-		//$c = $this['loginForm'];
-		//dumpe($c);
+
 	}
 
 	protected function createComponentLoginForm(){

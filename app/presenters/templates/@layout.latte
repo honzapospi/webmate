@@ -14,13 +14,7 @@
 
 <body>
 
-    <nav>
-        <ul>
-            <li><a n:href=":Login:default">Login</a></li>
-            <li><a n:href=":Registration:default">Registration</a></li>
-        </ul>
-    </nav>
-
+    {control menu}
 
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 

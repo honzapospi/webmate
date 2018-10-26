@@ -1,0 +1,12 @@
+<nav>
+    <ul>
+        <li>
+            {if $user->isLoggedIn()}
+            <a href="{link logout!}">Logout</a>
+            {else}
+            <a href="{plink Login:default}">Login</a>
+            {/if}
+        </li>
+        <li><a href="{plink Registration:default}">Registration</a></li>
+    </ul>
+</nav>
